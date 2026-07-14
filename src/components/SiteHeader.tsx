@@ -32,6 +32,9 @@ export default function SiteHeader() {
         <Link href="/dashboard" className="text-white/70 hover:text-white">
           Mi panel
         </Link>
+        <Link href="/dashboard/settings" className="text-white/70 hover:text-white">
+          ⚙️ Personalizar
+        </Link>
         <button onClick={handleSignOut} className="text-white/70 hover:text-white">
           Cerrar sesión
         </button>

@@ -50,6 +50,10 @@ export default async function DashboardPage() {
             <h3 className="font-bold">👤 Ver mi perfil público</h3>
             <p className="text-sm text-white/60">Así te ven tus fans.</p>
           </Link>
+          <Link href="/dashboard/settings" className="card hover:border-brand/50">
+            <h3 className="font-bold">⚙️ Personalizar mi perfil</h3>
+            <p className="text-sm text-white/60">Foto de perfil, portada, bio y nombre.</p>
+          </Link>
         </div>
         </main>
       </>
@@ -71,6 +75,10 @@ export default async function DashboardPage() {
         <Link href="/dashboard/subscriptions" className="card hover:border-brand/50">
           <h3 className="font-bold">❤️ Mis suscripciones</h3>
           <p className="text-sm text-white/60">Gestioná a quién estás suscripto.</p>
+        </Link>
+        <Link href="/dashboard/settings" className="card hover:border-brand/50">
+          <h3 className="font-bold">⚙️ Personalizar mi perfil</h3>
+          <p className="text-sm text-white/60">Foto de perfil, portada, bio y nombre.</p>
         </Link>
       </div>
       </main>

@@ -37,6 +37,10 @@ Esta plataforma maneja contenido para adultos. Como mínimo necesitás:
 | Contenido bloqueado con Signed URLs (nunca se expone el archivo real sin permiso) | ✅ |
 | Planes de suscripción (gratis o pagos) | ✅ |
 | Upload de fotos/videos | ✅ |
+| Publicaciones de solo texto (tipo Facebook) | ✅ |
+| Reacciones (me gusta / no me gusta / fuego / corazón) | ✅ |
+| Foto de perfil y foto de portada personalizables | ✅ |
+| Ver fotos/videos en tamaño grande (lightbox) | ✅ |
 | Verificación KYC de creadores (manual) | ✅ |
 | Pagos en cripto vía Coinbase Commerce | ✅ (base funcional) |
 | Pagos locales (Bancard / Pagopar) | 🚧 Pendiente, ver sección de pagos |
@@ -61,6 +65,7 @@ npm install
    - `0001_init.sql`
    - `0002_policies.sql`
    - `0003_storage_buckets.sql`
+   - `0004_reactions_and_text_posts.sql` (publicaciones de solo texto + reacciones)
 3. Ve a **Project Settings > API** y copiá:
    - `Project URL`
    - `anon public key`

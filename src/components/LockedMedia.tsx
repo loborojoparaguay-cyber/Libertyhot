@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import Lightbox from "@/components/Lightbox";
 
 /**
  * Muestra un placeholder borroso para contenido bloqueado, y solo pide la
  * Signed URL real (via API) cuando el usuario hace click en "Ver contenido".
  * Si no tiene acceso, la API responde 403 y mostramos el mensaje de suscripcion.
+ *
+ * Una vez desbloqueado, el contenido se ve en tamaño reducido dentro de la
+ * tarjeta del post, pero al hacer click se abre en un Lightbox (modal a
+ * pantalla completa) para verlo en grande.
  */
 export default function LockedMedia({
   postId,
@@ -22,6 +27,7 @@ export default function LockedMedia({
   const [needsSubscription, setNeedsSubscription] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showLightbox, setShowLightbox] = useState(false);
 
   async function unlock() {
     setLoading(true);
@@ -55,10 +61,25 @@ export default function LockedMedia({
   }
 
   if (url) {
-    return mediaType === "video" ? (
-      <video src={url} controls className="w-full rounded-xl" />
-    ) : (
-      <img src={url} alt="Contenido" className="w-full rounded-xl object-cover" />
+    return (
+      <>
+        <button
+          type="button"
+          onClick={() => setShowLightbox(true)}
+          className="block w-full cursor-zoom-in"
+          title="Click para ver en grande"
+        >
+          {mediaType === "video" ? (
+            <video src={url} className="w-full rounded-xl" />
+          ) : (
+            <img src={url} alt="Contenido" className="w-full rounded-xl object-cover" />
+          )}
+        </button>
+
+        {showLightbox && (
+          <Lightbox url={url} mediaType={mediaType} onClose={() => setShowLightbox(false)} />
+        )}
+      </>
     );
   }
 

@@ -9,7 +9,7 @@ export default async function ExplorePage() {
 
   const { data: creators } = await supabase
     .from("profiles")
-    .select("id, username, display_name, avatar_url, bio, subscription_price_monthly, currency")
+    .select("id, username, display_name, avatar_url, cover_url, bio, subscription_price_monthly, currency")
     .eq("role", "creator")
     .eq("is_creator_verified", true);
 
@@ -43,7 +43,24 @@ export default async function ExplorePage() {
               href={`/creator/${creator.username}`}
               className="card transition hover:border-brand/50"
             >
-              <div className="mb-3 h-32 w-full rounded-xl bg-gradient-to-br from-brand/40 to-brand-dark/40" />
+              <div
+                className="mb-3 h-32 w-full rounded-xl bg-cover bg-center bg-gradient-to-br from-brand/40 to-brand-dark/40"
+                style={
+                  (creator as any).cover_url
+                    ? { backgroundImage: `url(${(creator as any).cover_url})` }
+                    : undefined
+                }
+              />
+              <div className="-mt-10 mb-2 ml-2">
+                <div
+                  className="h-14 w-14 rounded-full border-4 border-base-card bg-cover bg-center bg-gradient-to-br from-brand/40 to-brand-dark/40"
+                  style={
+                    creator.avatar_url
+                      ? { backgroundImage: `url(${creator.avatar_url})` }
+                      : undefined
+                  }
+                />
+              </div>
               <h3 className="font-bold">{creator.display_name}</h3>
               <p className="text-sm text-white/50">@{creator.username}</p>
               <p className="mt-2 text-sm text-white/70 line-clamp-2">{creator.bio}</p>

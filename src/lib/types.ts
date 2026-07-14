@@ -6,6 +6,7 @@ export interface Profile {
   display_name: string;
   role: UserRole;
   avatar_url: string | null;
+  cover_url: string | null;
   bio: string | null;
   is_age_verified: boolean;
   created_at: string;
@@ -41,10 +42,20 @@ export interface ContentPost {
   id: string;
   creator_id: string;
   caption: string | null;
-  media_url: string;
-  media_type: "image" | "video";
+  media_url: string | null; // null si es un post de solo texto
+  media_type: "image" | "video" | "text" | null;
   is_locked: boolean; // true = solo visible para suscriptores activos
   price_unlock: number | null; // pay-per-view opcional
+  created_at: string;
+}
+
+export type ReactionType = "like" | "dislike" | "fire" | "heart";
+
+export interface PostReaction {
+  id: string;
+  post_id: string;
+  user_id: string;
+  reaction_type: ReactionType;
   created_at: string;
 }
 
