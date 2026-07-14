@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import SiteHeader from "@/components/SiteHeader";
 
 export default async function MySubscriptionsPage() {
   const supabase = createClient();
@@ -13,7 +14,9 @@ export default async function MySubscriptionsPage() {
     .eq("subscriber_id", user.id);
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-10">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-2xl px-6 py-10">
       <h1 className="mb-6 text-2xl font-bold">Mis suscripciones</h1>
 
       {!subscriptions || subscriptions.length === 0 ? (
@@ -46,6 +49,7 @@ export default async function MySubscriptionsPage() {
           ))}
         </div>
       )}
-    </main>
+      </main>
+    </>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import SiteHeader from "@/components/SiteHeader";
 
 /**
  * Formulario de verificacion KYC del creador: documento de identidad +
@@ -59,7 +60,9 @@ export default function CreatorVerificationPage() {
   }
 
   return (
-    <main className="mx-auto max-w-xl px-6 py-10">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-xl px-6 py-10">
       <h1 className="mb-2 text-2xl font-bold">Verificación de identidad</h1>
       <p className="mb-6 text-sm text-white/60">
         Por seguridad y cumplimiento legal, todos los creadores deben verificar su
@@ -104,6 +107,7 @@ export default function CreatorVerificationPage() {
           {submitting ? "Enviando..." : "Enviar para revisión"}
         </button>
       </form>
-    </main>
+      </main>
+    </>
   );
 }

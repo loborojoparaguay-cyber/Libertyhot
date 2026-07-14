@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import SiteHeader from "@/components/SiteHeader";
 
 export default async function DashboardPage() {
   const supabase = createClient();
@@ -16,7 +17,9 @@ export default async function DashboardPage() {
 
   if (profile?.role === "creator") {
     return (
-      <main className="mx-auto max-w-3xl px-6 py-10">
+      <>
+        <SiteHeader />
+        <main className="mx-auto max-w-3xl px-6 py-10">
         <h1 className="mb-1 text-2xl font-bold">Hola, {profile.display_name} 👋</h1>
         <p className="mb-8 text-white/60">Panel de creador/a</p>
 
@@ -48,12 +51,15 @@ export default async function DashboardPage() {
             <p className="text-sm text-white/60">Así te ven tus fans.</p>
           </Link>
         </div>
-      </main>
+        </main>
+      </>
     );
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-10">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-3xl px-6 py-10">
       <h1 className="mb-1 text-2xl font-bold">Hola, {profile?.display_name} 👋</h1>
       <p className="mb-8 text-white/60">Tu panel de suscriptor</p>
 
@@ -67,6 +73,7 @@ export default async function DashboardPage() {
           <p className="text-sm text-white/60">Gestioná a quién estás suscripto.</p>
         </Link>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

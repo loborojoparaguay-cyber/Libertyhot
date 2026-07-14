@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import SiteHeader from "@/components/SiteHeader";
 
 export const revalidate = 0;
 
@@ -13,7 +14,9 @@ export default async function ExplorePage() {
     .eq("is_creator_verified", true);
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-5xl px-6 py-10">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-bold">
           Explorar <span className="text-brand">creadores</span>
@@ -53,6 +56,7 @@ export default async function ExplorePage() {
           ))}
         </div>
       )}
-    </main>
+      </main>
+    </>
   );
 }

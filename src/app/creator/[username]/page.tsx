@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import LockedMedia from "@/components/LockedMedia";
 import SubscribeButton from "@/components/SubscribeButton";
+import SiteHeader from "@/components/SiteHeader";
 
 export const revalidate = 0;
 
@@ -51,7 +52,9 @@ export default async function CreatorProfilePage({
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-10">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-3xl px-6 py-10">
       <div className="card mb-8">
         <div className="mb-4 h-32 w-full rounded-xl bg-gradient-to-br from-brand/40 to-brand-dark/40" />
         <h1 className="text-2xl font-bold">{creator.display_name}</h1>
@@ -104,6 +107,7 @@ export default async function CreatorProfilePage({
           <p className="text-sm text-white/50">Este creador todavía no publicó contenido.</p>
         )}
       </div>
-    </main>
+      </main>
+    </>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import SiteHeader from "@/components/SiteHeader";
 
 interface Plan {
   id: string;
@@ -82,7 +83,9 @@ export default function CreatorPlansPage() {
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-10">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-2xl px-6 py-10">
       <h1 className="mb-6 text-2xl font-bold">Mis planes de suscripción</h1>
 
       <form onSubmit={createPlan} className="card mb-8 space-y-4">
@@ -160,6 +163,7 @@ export default function CreatorPlansPage() {
           ))}
         </div>
       )}
-    </main>
+      </main>
+    </>
   );
 }

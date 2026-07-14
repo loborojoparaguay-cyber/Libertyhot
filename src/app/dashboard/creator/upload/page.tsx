@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import SiteHeader from "@/components/SiteHeader";
 
 /**
  * Formulario para que el creador suba fotos/videos a su bucket "content"
@@ -65,7 +66,9 @@ export default function UploadContentPage() {
   }
 
   return (
-    <main className="mx-auto max-w-xl px-6 py-10">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-xl px-6 py-10">
       <h1 className="mb-6 text-2xl font-bold">Subir contenido</h1>
 
       <form onSubmit={handleUpload} className="card space-y-4">
@@ -108,6 +111,7 @@ export default function UploadContentPage() {
           {uploading ? "Subiendo..." : "Publicar"}
         </button>
       </form>
-    </main>
+      </main>
+    </>
   );
 }
