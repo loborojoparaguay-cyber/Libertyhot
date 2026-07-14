@@ -21,20 +21,36 @@ export default function LockedMedia({
   const [url, setUrl] = useState<string | null>(null);
   const [needsSubscription, setNeedsSubscription] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function unlock() {
     setLoading(true);
-    const res = await fetch(`/api/content/${postId}/signed-url`);
-    setLoading(false);
+    setErrorMessage(null);
 
-    if (res.status === 403) {
-      setNeedsSubscription(true);
-      return;
-    }
+    try {
+      const res = await fetch(`/api/content/${postId}/signed-url`);
 
-    if (res.ok) {
+      if (res.status === 401) {
+        setErrorMessage("Necesitás iniciar sesión para ver este contenido.");
+        return;
+      }
+
+      if (res.status === 403) {
+        setNeedsSubscription(true);
+        return;
+      }
+
+      if (!res.ok) {
+        setErrorMessage("No se pudo cargar el contenido. Intentá de nuevo.");
+        return;
+      }
+
       const data = await res.json();
       setUrl(data.url);
+    } catch {
+      setErrorMessage("Error de conexión. Revisá tu internet e intentá de nuevo.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -62,9 +78,14 @@ export default function LockedMedia({
             <p className="text-sm text-white/70">Suscribite para desbloquear</p>
           </>
         ) : (
-          <button onClick={unlock} disabled={loading} className="btn-primary text-sm">
-            {loading ? "Verificando..." : isLocked ? "🔒 Ver contenido" : "▶ Ver contenido"}
-          </button>
+          <>
+            <button onClick={unlock} disabled={loading} className="btn-primary text-sm">
+              {loading ? "Verificando..." : isLocked ? "🔒 Ver contenido" : "▶ Ver contenido"}
+            </button>
+            {errorMessage && (
+              <p className="max-w-[90%] text-xs text-red-400">{errorMessage}</p>
+            )}
+          </>
         )}
       </div>
     </div>

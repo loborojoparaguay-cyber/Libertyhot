@@ -34,6 +34,22 @@ export default async function CreatorProfilePage({
     .eq("creator_id", creator.id)
     .eq("is_active", true);
 
+  // Revisamos si el usuario logueado ya tiene una suscripcion (activa o
+  // pendiente de pago) con este creador, para no mostrarle "Suscribirme"
+  // de nuevo como si nada, y evitar que piense que la suscripcion no funciono.
+  const { data: { user } } = await supabase.auth.getUser();
+  let existingSubscription: { status: string } | null = null;
+
+  if (user) {
+    const { data } = await supabase
+      .from("subscriptions")
+      .select("status")
+      .eq("subscriber_id", user.id)
+      .eq("creator_id", creator.id)
+      .maybeSingle();
+    existingSubscription = data;
+  }
+
   return (
     <main className="mx-auto max-w-3xl px-6 py-10">
       <div className="card mb-8">
@@ -43,7 +59,15 @@ export default async function CreatorProfilePage({
         <p className="mt-3 text-white/70">{creator.bio}</p>
 
         <div className="mt-6 flex flex-wrap gap-3">
-          {plans && plans.length > 0 ? (
+          {existingSubscription?.status === "active" ? (
+            <span className="rounded-full bg-green-500/20 px-4 py-2 text-sm font-semibold text-green-400">
+              ✅ Ya estás suscripto/a
+            </span>
+          ) : existingSubscription?.status === "pending_payment" ? (
+            <span className="rounded-full bg-yellow-500/20 px-4 py-2 text-sm font-semibold text-yellow-400">
+              ⏳ Pago pendiente de confirmación
+            </span>
+          ) : plans && plans.length > 0 ? (
             plans.map((plan) => (
               <SubscribeButton
                 key={plan.id}
